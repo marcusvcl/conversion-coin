@@ -6,6 +6,8 @@ import java.util.Currency;
 import com.fasterxml.jackson.annotation.JsonGetter;
 
 import coding.dojo.commons.CurrencyFormatter;
+import coding.dojo.commons.Result;
+import coding.dojo.commons.Try;
 
 public record Coin(Value value, Currency currency) {
 
@@ -20,10 +22,10 @@ public record Coin(Value value, Currency currency) {
     }
 
     private static Currency getCurrency(String currencyCode) {
-        try {
-            return Currency.getInstance(currencyCode);
-        } catch (Exception e) {
-            throw new CoinException(String.format("The currency code %s is invalid!", currencyCode));
-        }
+        Result<Currency, String> result = Try.of(() -> Currency.getInstance(currencyCode),
+                "currencyCode not found");
+        if (result.isSuccess())
+            return result.success();
+        throw new CoinException(result.failure());
     }
 }
