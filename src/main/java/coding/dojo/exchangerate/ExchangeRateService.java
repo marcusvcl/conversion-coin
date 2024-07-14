@@ -6,13 +6,15 @@ import org.eclipse.microprofile.rest.client.inject.RestClient;
 import io.quarkus.cache.CacheResult;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import lombok.RequiredArgsConstructor;
 
 @ApplicationScoped
+@RequiredArgsConstructor
 public class ExchangeRateService implements ExchangeRateUseCase {
 
-    @RestClient
     @Inject
-    ExchangeRateWebClient webClient;
+    @RestClient
+    private final ExchangeRateWebClient webClient;
 
     @ConfigProperty(name = "exhange-api.authKey", defaultValue = "")
     String apiKey;
