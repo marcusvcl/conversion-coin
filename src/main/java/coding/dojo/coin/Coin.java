@@ -25,7 +25,7 @@ public record Coin(Value value, Currency currency) {
         Result<Currency, String> result = Try.of(() -> Currency.getInstance(currencyCode),
                 "currencyCode not found");
         if (result.isSuccess())
-            return result.success();
-        throw new CoinException(result.failure());
+            return result.getSuccess();
+        throw new CoinException(result.getFailure());
     }
 }

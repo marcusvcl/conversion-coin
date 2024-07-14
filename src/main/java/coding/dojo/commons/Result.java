@@ -1,5 +1,8 @@
 package coding.dojo.commons;
 
+import lombok.Getter;
+
+@Getter
 public class Result<S, F> {
 
     private final S success;
@@ -24,13 +27,5 @@ public class Result<S, F> {
 
     public boolean isFailure() {
         return failure != null;
-    }
-
-    public S success() {
-        return this.success;
-    }
-
-    public F failure() {
-        return this.failure;
     }
 }
